@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engine-fnns-consumer
+  namespace: default
+  labels:
+    app: engine-fnns-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engine-fnns-consumer
+  template:
+    metadata:
+      labels:
+        app: engine-fnns-consumer
+    spec:
+      containers:
+        - name: engine-fnns-consumer
+          image: 삭제
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BOOTSTRAP-SERVERS
+              value: "삭제"
+            - name: KAFKA-USERNAME
+              value: "아이디"
+            - name: KAFKA-PASSWORD
+              value: "암호"
+            - name: MONGO-SERVER
+              value: "url"
+            - name: MONGO-USERNAME
+              value: "아이디"
+            - name: MONGO-PASSWORD
+              value: "암호"
+            - name: MONGO-DBNAME
+              value: "디비 네임"
+            - name: SERVER-PORT
+              value: "8080"
+          command: ["/bin/sh"]
+          args:
+            [
+              "-c",
+              "java -jar ./engineFnNsConsumer-0.0.1-SNAPSHOT.jar --mongo.server=$(MONGO-SERVER) --mongo.username=$(MONGO-USERNAME) --mongo.password=$(MONGO-PASSWORD) --mongo.dbname=$(MONGO-DBNAME) --server.port=$(SERVER-PORT)",
+            ]
+          resources:
+            requests:
+              cpu: 1024m
+              memory: 1024Mi
+            limits:
+              cpu: 1536m
+              memory: 1536Mi
